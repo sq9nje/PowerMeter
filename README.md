@@ -1,2 +1,2 @@
 # PowerMeter
-RF Power Meter base on an STM32 MCU and AD8307
+RF Power Meter based on an STM32 MCU and AD8307
