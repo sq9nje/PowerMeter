@@ -15,6 +15,13 @@
 volatile FIFO_TypeDef U2Rx, U2Tx;
 #endif
 
+/*------------------------------------------------------------------------*//**
+* \brief Initializes USART2
+* \details Initializes USART2 - configures clocks and pin modes, sets the
+* baud rate and enables the IRQ.
+*
+* \param [in] baudRate desired UART baud rate
+*//*-------------------------------------------------------------------------*/
 void USART2_init(uint32_t baudRate)
 {
 	#ifdef BUFFERED
@@ -45,6 +52,12 @@ void USART2_init(uint32_t baudRate)
 	#endif
 }
 
+/*------------------------------------------------------------------------*//**
+* \brief Send a character
+* \details Sends a single character through USART2
+*
+* \param [in] ch character to be sent
+*//*-------------------------------------------------------------------------*/
 void USART2_putChar(char ch)
 {
 	#ifdef BUFFERED
@@ -59,12 +72,25 @@ void USART2_putChar(char ch)
 	#endif
 }
 
-void USART2_putString(const char * s)
+/*------------------------------------------------------------------------*//**
+* \brief Send a string
+* \details Send a string via USART2
+*
+* \param [in] s string to be sent
+*//*-------------------------------------------------------------------------*/
+void USART2_putString(const char* s)
 {
 	while(*s)
 		USART2_putChar(*s++);
 }
 
+/*------------------------------------------------------------------------*//**
+* \brief Send an integer
+* \details Send an integer via USART2. Support different system bases.
+*
+* \param [in] i integer value
+* \param [in] base system base
+*//*-------------------------------------------------------------------------*/
 void USART2_putInt(int i, int base)
 {
 	char _buf[16];
@@ -72,6 +98,12 @@ void USART2_putInt(int i, int base)
 	USART2_putString(_buf);
 }
 
+/*------------------------------------------------------------------------*//**
+* \brief Receive a character
+* \details Returns a character received via USART2.
+*
+* \returns char
+*//*-------------------------------------------------------------------------*/
 char USART2_get(void)
 {
 #ifdef BUFFERED
@@ -86,7 +118,10 @@ char USART2_get(void)
 #endif
 }
 
-#ifdef USE_SPRINTF
+/*------------------------------------------------------------------------*//**
+* \brief Send a formatted string
+* \details Send a printf formatted string via USART2. Produces large code.
+*//*-------------------------------------------------------------------------*/
 void USART2_printf(const char * format, ...) {
 	char _buf[256];
 	va_list arglist;
@@ -95,8 +130,10 @@ void USART2_printf(const char * format, ...) {
 	va_end(arglist);
 	USART2_putString(_buf);
 }
-#endif
 
+/*------------------------------------------------------------------------*//**
+* \brief IRQ handler for USART2
+*//*-------------------------------------------------------------------------*/
 void USART2_IRQHandler(void)
 {
 	uint8_t ch;

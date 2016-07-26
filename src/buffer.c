@@ -6,6 +6,10 @@
  */
 #include "buffer.h"
 
+/*------------------------------------------------------------------------*//**
+* \brief Initializes the buffer
+* \details Zeroes the in and out indices and character count.
+*//*-------------------------------------------------------------------------*/
 void buffer_init(volatile FIFO_TypeDef *buffer)
 {
 	buffer->count = 0;	//0 bytes in buffer
@@ -13,6 +17,10 @@ void buffer_init(volatile FIFO_TypeDef *buffer)
 	buffer->out = 0;	//index points to start
 }
 
+/*------------------------------------------------------------------------*//**
+* \brief Puts a character in the buffer
+* \details Puts a character into the buffer and increments the in index.
+*//*-------------------------------------------------------------------------*/
 ErrorStatus buffer_put(volatile FIFO_TypeDef *buffer, uint8_t ch)
 {
 	if(buffer->count == USARTBUFFSIZE)
@@ -24,6 +32,10 @@ ErrorStatus buffer_put(volatile FIFO_TypeDef *buffer, uint8_t ch)
 	return SUCCESS;
 }
 
+/*------------------------------------------------------------------------*//**
+* \brief Gets a character from the buffer
+* \details Fetches a character from the buffer and increments the out index.
+*//*-------------------------------------------------------------------------*/
 ErrorStatus buffer_get(volatile FIFO_TypeDef *buffer, uint8_t *ch)
 {
 	if(buffer->count == 0)
@@ -35,6 +47,9 @@ ErrorStatus buffer_get(volatile FIFO_TypeDef *buffer, uint8_t *ch)
 	return SUCCESS;
 }
 
+/*------------------------------------------------------------------------*//**
+* \brief Checks if the buffer is empty
+*//*-------------------------------------------------------------------------*/
 ErrorStatus buffer_isEmpty(volatile FIFO_TypeDef buffer)
 {
 	if(buffer.count == 0)

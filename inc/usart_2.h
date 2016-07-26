@@ -12,7 +12,6 @@
 #include "buffer.h"
 
 #define BUFFERED
-#define USE_SPRINTF
 
 #ifdef BUFFERED
 extern volatile FIFO_TypeDef U2Rx, U2Tx;
